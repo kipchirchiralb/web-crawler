@@ -1,3 +1,8 @@
+function getURLsFromHTML(htmlBody, baseURL) {
+  const urls = [];
+  return urls;
+}
+
 function normalizeURL(urlstring) {
   const urlObj = new URL(urlstring);
   console.log(urlObj);
@@ -7,6 +12,7 @@ function normalizeURL(urlstring) {
   }
   return hostPath;
 }
+
 // normalizeURL("https://blog.boot.dev/path");
 
-module.exports = { normalizeURL };
+module.exports = { normalizeURL, getURLsFromHTML };
