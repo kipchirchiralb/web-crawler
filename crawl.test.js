@@ -31,3 +31,65 @@ test("normalizeURL strip http", () => {
 });
 
 // 04:12:52
+
+test("getURLsFromHTML abslute urls", () => {
+  const inputHTMLBody = `
+    <html>
+    <body>
+      <a href="https://blog.boot.dev/">Boot Dev Blog</a>
+    </body>
+    </html>
+  `;
+  const inputBaseURL = "https://blog.boot.dev";
+  const actual = getURLsFromHTML(inputHTMLBody, inputBaseURL);
+  const expected = ["https://blog.boot.dev/"];
+  expect(actual).toEqual(expected);
+});
+
+test("getURLsFromHTML relative urls", () => {
+  const inputHTMLBody = `
+    <html>
+    <body>
+      <a href="/path/to/file">Boot Dev Blog</a>
+    </body>
+    </html>
+  `;
+  const inputBaseURL = "https://blog.boot.dev";
+  const actual = getURLsFromHTML(inputHTMLBody, inputBaseURL);
+  const expected = ["https://blog.boot.dev/path/to/file"];
+  expect(actual).toEqual(expected);
+});
+
+test("getURLsFromHTML multiple urls", () => {
+  const inputHTMLBody = `
+    <html>
+    <body>
+    <a href="/path1">Boot Dev Blog</a>
+    <a href="https://blog.boot.dev/path2">Boot Dev Blog</a>
+    <a href="./path3">Boot Dev Blog</a>
+    </body>
+    </html>
+  `;
+  const inputBaseURL = "https://blog.boot.dev";
+  const actual = getURLsFromHTML(inputHTMLBody, inputBaseURL);
+  const expected = [
+    "https://blog.boot.dev/path1",
+    "https://blog.boot.dev/path2",
+    "https://blog.boot.dev/path3",
+  ];
+  expect(actual).toEqual(expected);
+});
+
+test("getURLsFromHTML invalid urls", () => {
+  const inputHTMLBody = `
+    <html>
+    <body>
+      <a href="path/to/file">Boot Dev Blog</a>
+    </body>
+    </html>
+  `;
+  const inputBaseURL = "https://blog.boot.dev";
+  const actual = getURLsFromHTML(inputHTMLBody, inputBaseURL);
+  const expected = [];
+  expect(actual).toEqual(expected);
+});
