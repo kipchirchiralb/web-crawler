@@ -30,8 +30,6 @@ test("normalizeURL strip http", () => {
   expect(actual).toEqual(expected);
 });
 
-// 04:12:52
-
 test("getURLsFromHTML abslute urls", () => {
   const inputHTMLBody = `
     <html>
